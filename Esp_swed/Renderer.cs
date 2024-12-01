@@ -27,13 +27,14 @@ namespace Multi_ESP
         private bool enableName = true;
         private bool enableVisibilityCheck = true;
 
-        private float boneThickness = 4;
+        private float boneThickness =200;
 
         private Vector4 enemyColor = new Vector4(1, 0, 0, 1); // red
         private Vector4 teamColor = new Vector4(0, 1, 0, 1); // green
         private Vector4 barColor = new Vector4(0, 1, 0, 1);//green
         private Vector4 nameColor = new Vector4(1,1,1,1); //white
         private Vector4 hiddenColor = new Vector4(0,0,0,1); //black
+        private Vector4 BoneColor = new Vector4(1,0,2,1);
 
         //draw list
         ImDrawListPtr drawList;
@@ -46,11 +47,12 @@ namespace Multi_ESP
             ImGui.Checkbox("eneble esp", ref enableEsp);
             if (enableEsp)
             {
-                /*ImGui.Checkbox("bones", ref enableBones);
+                ImGui.Checkbox("bones", ref enableBones);
                 if (enableBones)
                 {
-                    ImGui.SliderFloat("bone thickness", ref boneThickness, 4, 500);
-                }*/
+                    ImGui.SliderFloat("bone thickness", ref boneThickness, 50, 1500);
+                    
+                }
 
                 ImGui.Checkbox("enable visibility check", ref enableVisibilityCheck);
                 ImGui.Checkbox("enable name", ref enableName);
@@ -105,7 +107,7 @@ namespace Multi_ESP
                         DrawLine(entity);
                         DrawName(entity);
                         ScopedCheck(entity);
-                        //DrawBones(entity);
+                        if(enableBones && entity.team!=localPlayer.team) DrawBones(entity);
                     }
 
                 } 
@@ -145,17 +147,23 @@ namespace Multi_ESP
             // Draw rectangle
             drawList.AddRect(rectTop, rectBottom, ImGui.ColorConvertFloat4ToU32(boxColor));
 
-            // Calculate center of the top side of the rectangle
-            Vector2 circleCenter = new Vector2((rectTop.X + rectBottom.X) / 2, rectTop.Y);
-
-            // Calculate radius of the circle (half of the height of the rectangle)
-            float circleRadius = entityHeight / 8.5f;
-
-            // hidden check
             
 
-            // Draw circle
-            drawList.AddCircle(circleCenter, circleRadius, ImGui.ColorConvertFloat4ToU32(boxColor));
+            if (!enableBones)
+            {
+                // Calculate center of the top side of the rectangle
+                Vector2 circleCenter = new Vector2((rectTop.X + rectBottom.X) / 2, rectTop.Y);
+
+                // Calculate radius of the circle (half of the height of the rectangle)
+                float circleRadius = entityHeight / 8.5f;
+
+                // hidden check
+
+
+                // Draw circle
+                drawList.AddCircle(circleCenter, circleRadius, ImGui.ColorConvertFloat4ToU32(boxColor));
+            }
+            
         }
 
         private void DrawLine(Entity entity)
@@ -218,8 +226,19 @@ namespace Multi_ESP
         private void DrawBones(Entity entity)
         {
             // get ether team or enemy colorr depending on the team
-            uint uintColor = localPlayer.team == entity.team ? ImGui.ColorConvertFloat4ToU32(teamColor) : ImGui.ColorConvertFloat4ToU32(enemyColor);
-            float currentBoneThickness = boneThickness / entity.distance;
+            uint uintColor = ImGui.ColorConvertFloat4ToU32(BoneColor);
+
+            float currentBoneThickness;
+
+            if (localPlayer.scoped)
+            {
+                currentBoneThickness = boneThickness;
+            }
+            else
+            {
+                currentBoneThickness = boneThickness / entity.distance;
+            }
+
             //draw lines between bones
             drawList.AddLine(entity.bones2d[1], entity.bones2d[2], uintColor, currentBoneThickness);
 
@@ -244,7 +263,9 @@ namespace Multi_ESP
             drawList.AddLine(entity.bones2d[9], entity.bones2d[10], uintColor, currentBoneThickness);
 
             drawList.AddLine(entity.bones2d[11], entity.bones2d[12], uintColor, currentBoneThickness);
-            drawList.AddCircleFilled(entity.bones2d[2], 3 + currentBoneThickness, uintColor);
+
+            drawList.AddCircle(entity.bones2d[2], currentBoneThickness * 50, uintColor);
+
         }
 
         //transfer entity methods

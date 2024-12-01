@@ -110,8 +110,13 @@ while (true)
         entity.position2d = Calculate.WordToScreen(viewMatrix, entity.position, screenSize);
         entity.viewPosition2D = Calculate.WordToScreen(viewMatrix, Vector3.Add(entity.position, entity.viewOffset), screenSize);
 
-        /*entity.bones = Calculate.ReadBones(boneMatrix, swed);
-        entity.bones2d = Calculate.ReadBones2d(entity.bones, viewMatrix, renderer.screeenSize);*/
+        entity.distance = Vector3.Distance(entity.position, localPlayer.position);
+
+        entity.bones = Calculate.ReadBones(boneMatrix, swed);
+
+        entity.bones2d = Calculate.ReadBones2d(entity.bones, viewMatrix, renderer.screeenSize);
+        
+
         entities.Add(entity);
         Console.WriteLine($"entity pos: {entity.position.X} ,{entity.position.Y}, {entity.position.Z}. team : {entity.team}. ID: {i} ");
     }
