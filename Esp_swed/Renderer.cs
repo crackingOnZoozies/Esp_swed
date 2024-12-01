@@ -27,7 +27,7 @@ namespace Multi_ESP
         private bool enableName = true;
         private bool enableVisibilityCheck = true;
 
-        private float boneThickness =200;
+        private float boneThickness =4;
 
         private Vector4 enemyColor = new Vector4(1, 0, 0, 1); // red
         private Vector4 teamColor = new Vector4(0, 1, 0, 1); // green
@@ -50,7 +50,7 @@ namespace Multi_ESP
                 ImGui.Checkbox("bones", ref enableBones);
                 if (enableBones)
                 {
-                    ImGui.SliderFloat("bone thickness", ref boneThickness, 50, 1500);
+                    ImGui.SliderFloat("bone thickness", ref boneThickness, 1, 150);
                     
                 }
 
@@ -228,6 +228,7 @@ namespace Multi_ESP
             // get ether team or enemy colorr depending on the team
             uint uintColor = ImGui.ColorConvertFloat4ToU32(BoneColor);
 
+
             float currentBoneThickness;
 
             if (localPlayer.scoped)
@@ -264,8 +265,8 @@ namespace Multi_ESP
 
             drawList.AddLine(entity.bones2d[11], entity.bones2d[12], uintColor, currentBoneThickness);
 
-            drawList.AddCircle(entity.bones2d[2], currentBoneThickness * 50, uintColor);
-
+            drawList.AddCircle(entity.bones2d[2], (entity.position2d.Y - entity.viewPosition2D.Y) / 8.5f, uintColor);
+            
         }
 
         //transfer entity methods
