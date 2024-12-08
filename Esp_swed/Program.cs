@@ -48,6 +48,10 @@ int m_bOldIsScoped = 0x242C; // bool
 int m_modelState = 0x170;
 int m_pGameSceneNode = 0x328;
 
+int m_pClippingWeapon = 0x13A0;
+int m_iItemDefinitionIndex = 0x1BA;
+int m_AttributeManager = 0x1148;
+int m_Item = 0x50;
 
 //esp loop
 while (true)
@@ -93,6 +97,11 @@ while (true)
         //get matrix
         float[] viewMatrix = swed.ReadMatrix(client + dwViewMatrix);
 
+        IntPtr currentWeapon = swed.ReadPointer(currentPawn, m_pClippingWeapon);
+
+        // get item defenition index
+        short weponDefenitionIndex = swed.ReadShort(currentWeapon, m_AttributeManager + m_Item + m_iItemDefinitionIndex);
+
         //populate entities
         Entity entity = new Entity();
 
@@ -115,10 +124,10 @@ while (true)
         entity.bones = Calculate.ReadBones(boneMatrix, swed);
 
         entity.bones2d = Calculate.ReadBones2d(entity.bones, viewMatrix, renderer.screeenSize);
-        
-
+        entity.currentWeaponIndex = weponDefenitionIndex;
+        entity.currentWeaponName = Enum.GetName(typeof(Weapon), weponDefenitionIndex);
         entities.Add(entity);
-        Console.WriteLine($"entity pos: {entity.position.X} ,{entity.position.Y}, {entity.position.Z}. team : {entity.team}. ID: {i} ");
+        Console.WriteLine($"entity pos: {entity.position.X} ,{entity.position.Y}, {entity.position.Z}. team : {entity.team}. ID: {i} , weapon: {entity.currentWeaponName}");
     }
     //Console.Clear();
     //update render

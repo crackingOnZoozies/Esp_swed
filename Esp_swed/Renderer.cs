@@ -26,6 +26,7 @@ namespace Multi_ESP
         private bool enableBones = true;
         private bool enableName = true;
         private bool enableVisibilityCheck = true;
+        private bool weaponEsp = true;
 
         private float boneThickness =4;
 
@@ -35,6 +36,7 @@ namespace Multi_ESP
         private Vector4 nameColor = new Vector4(1,1,1,1); //white
         private Vector4 hiddenColor = new Vector4(0,0,0,1); //black
         private Vector4 BoneColor = new Vector4(1,0,2,1);
+        //private Vector4 weaponColor = new Vector4(1, 0, 1, 0);
 
         //draw list
         ImDrawListPtr drawList;
@@ -47,6 +49,9 @@ namespace Multi_ESP
             ImGui.Checkbox("eneble esp", ref enableEsp);
             if (enableEsp)
             {
+                ImGui.Checkbox("weapon esp", ref weaponEsp);
+                
+
                 ImGui.Checkbox("bones", ref enableBones);
                 if (enableBones)
                 {
@@ -105,9 +110,10 @@ namespace Multi_ESP
                         DrawHealthBar(entity);
                         DrawBox(entity);
                         DrawLine(entity);
-                        DrawName(entity);
+                        DrawNameAndWeapon(entity);
                         ScopedCheck(entity);
                         if(enableBones && entity.team!=localPlayer.team) DrawBones(entity);
+                        
                     }
 
                 } 
@@ -205,12 +211,20 @@ namespace Multi_ESP
             drawList.AddRectFilled(barTop, barBottom, ImGui.ColorConvertFloat4ToU32(barColor));
 
         }
-        private void DrawName(Entity entity)
+        private void DrawNameAndWeapon(Entity entity)
         {
             if (enableName)
             {
-                Vector2 textLocation = new Vector2(entity.viewPosition2D.X, entity.position2d.Y - yOffset);
-                drawList.AddText(textLocation, ImGui.ColorConvertFloat4ToU32(nameColor), $"{entity.name}");
+                Vector2 textLocation1 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y - yOffset);
+                
+                drawList.AddText(textLocation1, ImGui.ColorConvertFloat4ToU32(nameColor), $"{entity.name}");
+
+                if (weaponEsp)
+                {
+                    Vector2 textLocation2 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y);
+                    drawList.AddText(textLocation2, ImGui.ColorConvertFloat4ToU32(nameColor), $"GUN : {entity.currentWeaponName}");
+                }
+                
             }
             
         }
@@ -267,7 +281,10 @@ namespace Multi_ESP
 
             drawList.AddCircle(entity.bones2d[2], (entity.position2d.Y - entity.viewPosition2D.Y) / 8.5f, uintColor);
             
+        
         }
+
+        
 
         //transfer entity methods
 

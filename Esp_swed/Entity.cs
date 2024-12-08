@@ -32,6 +32,7 @@ namespace Multi_ESP
 
         public bool spotted { get; set; }
         public bool scoped { get; set; }
+
     }
     public enum BonesIds
     {
@@ -51,47 +52,155 @@ namespace Multi_ESP
     }
     public enum Weapon
     {
-        Deagle = 1,
-        elite = 2,
-        FiveSeven,
-        Glock,
-        Ak47 = 7,
-        Aug = 8,
+        DEAGLE = 1,
+
+        BERETAS = 2,
+
+        FIVESEVEN = 3,
+
+        GLOCK = 4,
+
+        AK47 = 7,
+
+        AUG = 8,
+
         AWP = 9,
-        Famas = 10,
-        G3Sg1,
+
+        FAMAS = 10,
+
+        G3SG1 = 11,
+
+        GALILAR = 13,
+
         M249 = 14,
-        Mac10 = 17,
+
+        M4A1 = 16,
+
+        MAC10 = 17,
+
         P90 = 19,
-        UMP = 24,
-        Xm1014 = 25,
-        Bizon = 26,
-        Mag7 = 27,
-        Negev = 28,
-        SawedOff = 29,
-        Tec9 = 30,
-        Zeus = 31,
-        P2000 = 32,
-        Mp7 = 33,
-        Mp9 = 34,
-        Nova = 35,
+
+        MP5SD = 23,
+
+        UMP45 = 24,
+
+        XM1014 = 25,
+
+        BIZON = 26,
+
+        MAG7 = 27,
+
+        NEGEV = 28,
+
+        SAWEDOFF = 29,
+
+        TEC9 = 30,
+
+        TASER = 31,
+
+        HKP2000 = 32,
+
+        MP7 = 33,
+
+        MP9 = 34,
+
+        NOVA = 35,
+
         P250 = 36,
-        Scar20 = 38,
-        Sg556 = 39,
-        Scout = 40,
-        ct_knife = 42,
-        FlashBang = 43,
-        HE = 44,
-        Smoke = 45,
-        Molotov = 46,
-        Decoy = 47,
-        Molotov_CT = 48,
+
+        SHIELD = 37,
+
+        SCAR20 = 38,
+
+        SG556 = 39,
+
+        SSG08 = 40,
+
+        KNIFEGG = 41,
+
+        KNIFE = 42,
+
+        FLASHBANG = 43,
+
+        HEGRENADE = 44,
+
+        SMOKEGRENADE = 45,
+
+        MOLOTOV = 46,
+
+        DECOY = 47,
+
+        INCGRENADE = 48,
+
         C4 = 49,
-        M4A4 = 16,
-        UspS = 61,
-        M4A1_Silesed = 60,
-        Cz75A = 63,
-        revolver = 64,
-        t_knife = 59
-    }
+
+        HEALTHSHOT = 57,
+
+        KNIFE_T = 59,
+
+        M4A1_SILENCER = 60,
+
+        USP_SILENCER = 61,
+
+        CZ75A = 63,
+
+        REVOLVER = 64,
+
+        TAGRENADE = 68,
+
+        FISTS = 69,
+
+        BREACHCHARGE = 70,
+
+        TABLET = 72,
+
+        MELEE = 74,
+
+        AXE = 75,
+
+        HAMMER = 76,
+
+        SPANNER = 78,
+
+        KNIFE_GHOST = 80,
+
+        FIREBOMB = 81,
+
+        DIVERSION = 82,
+
+        FRAG_GRENADE = 83,
+
+        SNOWBALL = 84,
+
+        BUMPMINE = 85,
+
+        BAYONET = 500,
+
+        KNIFE_FLIP = 505,
+
+        KNIFE_GUT = 506,
+
+        KNIFE_KARAMBIT = 507,
+
+        KNIFE_M9_BAYONET = 508,
+
+        KNIFE_TACTICAL = 509,
+
+        KNIFE_FALCHION = 512,
+
+        KNIFE_SURVIVAL_BOWIE = 514,
+
+        KNIFE_BUTTERFLY = 515,
+
+        KNIFE_PUSH = 516,
+
+        KNIFE_URSUS = 519,
+
+        KNIFE_GYPSY_JACKKNIFE = 520,
+
+        KNIFE_STILETTO = 522,
+
+        KNIFE_WIDOWMAKER = 523,
+
+    };
 }
