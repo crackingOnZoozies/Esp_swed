@@ -27,6 +27,8 @@ namespace Multi_ESP
         private bool enableName = true;
         private bool enableVisibilityCheck = true;
         private bool weaponEsp = true;
+        private bool box = false;
+        private bool drawLine = false;
 
         private float boneThickness =4;
 
@@ -50,12 +52,13 @@ namespace Multi_ESP
             if (enableEsp)
             {
                 ImGui.Checkbox("weapon esp", ref weaponEsp);
-                
+                ImGui.Checkbox("box", ref box); 
+                ImGui.Checkbox("draw line", ref drawLine);
 
                 ImGui.Checkbox("bones", ref enableBones);
-                if (enableBones)
+                if (ImGui.CollapsingHeader("bone color"))
                 {
-                    ImGui.SliderFloat("bone thickness", ref boneThickness, 1, 150);
+                    ImGui.ColorPicker4("##Bone color", ref BoneColor);
                     
                 }
 
@@ -108,8 +111,8 @@ namespace Multi_ESP
                     {
                         //draw methods (all)
                         DrawHealthBar(entity);
-                        DrawBox(entity);
-                        DrawLine(entity);
+                        if(box) DrawBox(entity);
+                        if(drawLine) DrawLine(entity);
                         DrawNameAndWeapon(entity);
                         ScopedCheck(entity);
                         if(enableBones && entity.team!=localPlayer.team) DrawBones(entity);
@@ -215,18 +218,35 @@ namespace Multi_ESP
         {
             if (enableName)
             {
+                // Используем расстояние из объекта Entity
+                float distance = entity.distance;
+
+                // Масштабируем размер текста в зависимости от расстояния
+                float textScale = 0.8f / (distance * 0.1f); // Пример формулы масштабирования
+                textScale = Math.Clamp(textScale, 0.5f, 2.0f)*1.5f; // Ограничиваем минимальный и максимальный размер
+
+                // Позиция для текста (имя)
                 Vector2 textLocation1 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y - yOffset);
-                
+
+                // Устанавливаем размер текста
+                ImGui.SetWindowFontScale(textScale);
+
+                // Отрисовываем текст (имя)
                 drawList.AddText(textLocation1, ImGui.ColorConvertFloat4ToU32(nameColor), $"{entity.name}");
 
+                // Если включено отображение оружия
                 if (weaponEsp)
                 {
+                    // Позиция для текста (оружие)
                     Vector2 textLocation2 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y);
+
+                    // Отрисовываем текст (оружие)
                     drawList.AddText(textLocation2, ImGui.ColorConvertFloat4ToU32(nameColor), $"GUN : {entity.currentWeaponName}");
                 }
-                
+
+                // Возвращаем размер текста к значению по умолчанию
+                ImGui.SetWindowFontScale(1.0f);
             }
-            
         }
         private void ScopedCheck(Entity entity)
         {
