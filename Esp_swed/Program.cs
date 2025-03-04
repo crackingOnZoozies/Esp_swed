@@ -27,9 +27,9 @@ Entity localPlayer = new Entity();
 // offsets
 
 //offsets.cs
-int dwEntityList = 0x1A359B0; 
-int dwLocalPlayerPawn = 0x1889F20;
-int dwViewMatrix = 0x1AA17B0;
+int dwEntityList = 0x1A36A00; 
+int dwLocalPlayerPawn = 0x188AF20;
+int dwViewMatrix = 0x1AA27F0;
 
 //cliend.dll offsets
 int m_vOldOrigin = 0x1324;

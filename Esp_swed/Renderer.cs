@@ -223,7 +223,7 @@ namespace Multi_ESP
 
                 // Масштабируем размер текста в зависимости от расстояния
                 float textScale = 0.8f / (distance * 0.1f); // Пример формулы масштабирования
-                textScale = Math.Clamp(textScale, 0.5f, 2.0f)*1.5f; // Ограничиваем минимальный и максимальный размер
+                textScale = Math.Clamp(textScale, 0.5f, 2.0f) * 1.5f; // Ограничиваем минимальный и максимальный размер
 
                 // Позиция для текста (имя)
                 Vector2 textLocation1 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y - yOffset);
@@ -235,19 +235,20 @@ namespace Multi_ESP
                 drawList.AddText(textLocation1, ImGui.ColorConvertFloat4ToU32(nameColor), $"{entity.name}");
 
                 // Если включено отображение оружия
-                if (weaponEsp)
-                {
-                    // Позиция для текста (оружие)
-                    Vector2 textLocation2 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y);
-
-                    // Отрисовываем текст (оружие)
-                    drawList.AddText(textLocation2, ImGui.ColorConvertFloat4ToU32(nameColor), $"GUN : {entity.currentWeaponName}");
-                }
-
-                // Возвращаем размер текста к значению по умолчанию
-                ImGui.SetWindowFontScale(1.0f);
             }
-        }
+            if (weaponEsp)
+            {
+                // Позиция для текста (оружие)
+                Vector2 textLocation2 = new Vector2(entity.viewPosition2D.X, entity.position2d.Y);
+
+                // Отрисовываем текст (оружие)
+                drawList.AddText(textLocation2, ImGui.ColorConvertFloat4ToU32(nameColor), $"GUN : {entity.currentWeaponName}");
+            }
+
+            // Возвращаем размер текста к значению по умолчанию
+            ImGui.SetWindowFontScale(1.0f);
+        
+    }
         private void ScopedCheck(Entity entity)
         {
             Vector2 textLocation = new Vector2(entity.viewPosition2D.X, entity.position2d.Y + yOffset);
